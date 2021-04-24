@@ -1,0 +1,15 @@
+<ul ngbNav #nav="ngbNav" class="navbar">
+  <li ngbNavItem class="navbar-brand">
+    Rubiks
+  </li>
+  <ng-container *ngIf="auth.isAuthenticated$ | async; else loggedOut">
+    <li ngbNavItem>
+      <button mat-raised-button (click)="logout()">Logout</button>
+    </li>
+  </ng-container>
+  <ng-template #loggedOut>
+    <li ngbNavItem mat-raised-button>
+      <button mat-raised-button (click)="loginWithRedirect()">Login</button>
+    </li>
+  </ng-template>
+</ul>
