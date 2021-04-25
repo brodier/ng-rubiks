@@ -5,15 +5,18 @@
     id="all"
     cdkDropList
     [cdkDropListData]="all"
+    cdkDropListOrientation="horizontal"
     cdkDropListConnectedTo="even"
     class="example-list"
     (cdkDropListDropped)="drop($event)"
     [cdkDropListEnterPredicate]="noReturnPredicate">
     <div
       class="example-box"
-      *ngFor="let number of all"
-      [cdkDragData]="number"
-      cdkDrag>{{number}}</div>
+      *ngFor="let piece of all"
+      [cdkDragData]="piece"
+      cdkDrag>
+        <app-piece [piece]="piece"></app-piece>
+    </div>
   </div>
 </div>
 
@@ -25,13 +28,16 @@
     cdkDropList
     [cdkDropListData]="even"
     cdkDropListConnectedTo="all"
+    cdkDropListOrientation="horizontal"
     class="example-list"
     (cdkDropListDropped)="drop($event)"
     [cdkDropListEnterPredicate]="evenPredicate">
     <div
       class="example-box"
-      *ngFor="let number of even"
+      *ngFor="let piece of even"
       cdkDrag
-      [cdkDragData]="number">{{number}}</div>
+      [cdkDragData]="piece">
+      <app-piece [piece]="piece"></app-piece>
+    </div>
   </div>
 </div>

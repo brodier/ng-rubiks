@@ -1,0 +1,41 @@
+.piece {
+  padding: 20px 15px;
+  border-bottom: solid 1px #ccc;
+  color: rgba(0, 0, 0, 0.87);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  border: solid;
+  cursor: move;
+  background: white;
+  font-size: 18;
+  font-weight:bold;
+}
+
+.red {
+  background-color: Beige;
+  color: red;
+}
+
+.black {
+  background-color: Beige ;
+  color: black;
+}
+
+.yellow {
+  background-color: Beige ;
+  color: DarkOrange;
+
+}
+
+.blue {
+  background-color: Beige ;
+  color: blue;
+}
+
+.none {
+  background-color: none;
+  border: none;
+}

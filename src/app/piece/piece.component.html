@@ -1,0 +1,6 @@
+<ng-container *ngIf="piece && piece.value > 0 else empty">
+  <div class="piece {{piece.color}}">{{piece.value}}</div>
+</ng-container>
+<ng-template #empty>
+  <div class="piece none">&nbsp;</div>
+</ng-template>

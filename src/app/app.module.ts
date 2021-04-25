@@ -11,13 +11,15 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BoardComponent } from './board/board.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import { PieceComponent } from './piece/piece.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthButtonComponent,
     UserProfileComponent,
-    BoardComponent
+    BoardComponent,
+    PieceComponent
   ],
   imports: [
     BrowserModule,

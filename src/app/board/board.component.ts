@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {CdkDragDrop, CdkDrag, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import { Piece } from '../_model/piece.model';
 
 @Component({
   selector: 'app-board',
@@ -14,10 +15,19 @@ export class BoardComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  all = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-  even = [10];
+  all = [
+    {color: 'red', value: 1},
+    {color: 'red', value: 2},
+    {color: 'red', value: 3},
+    {color: 'none', value: 0},
+    {color: 'red', value: 5},
+    {color: 'red', value: 6},
+    {color: 'red', value: 7},
+    {color: 'red', value: 8},
+    {color: 'red', value: 9}];
+  even = [{color: 'red', value: 10}];
 
-  drop(event: CdkDragDrop<number[]>) {
+  drop(event: CdkDragDrop<Piece[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -29,8 +39,8 @@ export class BoardComponent implements OnInit {
   }
 
   /** Predicate function that only allows even numbers to be dropped into a list. */
-  evenPredicate(item: CdkDrag<number>) {
-    return item.data % 2 === 0;
+  evenPredicate(item: CdkDrag<Piece>) {
+    return item.data.value % 2 === 0;
   }
 
   /** Predicate function that doesn't allow items to be dropped into a list. */
