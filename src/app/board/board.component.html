@@ -2,6 +2,25 @@
   <h2>Available numbers</h2>
 
   <div
+    *ngFor="let list of lists"
+    id="{{list.id}}"
+    cdkDropList
+    [cdkDropListData]="list.pieces"
+    cdkDropListOrientation="horizontal"
+    [cdkDropListConnectedTo]=allLists
+    class="example-list"
+    (cdkDropListDropped)="movePiece($event)"
+    [cdkDropListEnterPredicate]="checkMovePiece">
+    <div
+      class="example-box"
+      *ngFor="let piece of list.pieces"
+      [cdkDragData]="piece"
+      cdkDrag>
+        <app-piece [piece]="piece"></app-piece>
+    </div>
+
+  </div>
+  <div
     id="all"
     cdkDropList
     [cdkDropListData]="all"
