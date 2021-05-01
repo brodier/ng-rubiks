@@ -1,5 +1,9 @@
+<div class="row">
+  todo : put here game info
+</div>
+
 <div class="example-container">
-  <h2>Available numbers</h2>
+  <h2>Public boad</h2>
 
   <div
     *ngFor="let list of lists"
@@ -14,49 +18,49 @@
     <div
       class="example-box"
       *ngFor="let piece of list.pieces"
+      [cdkDragDisabled]="isEmptyPiece(piece)"
       [cdkDragData]="piece"
       cdkDrag>
         <app-piece [piece]="piece"></app-piece>
     </div>
 
-  </div>
-  <div
-    id="all"
-    cdkDropList
-    [cdkDropListData]="all"
-    cdkDropListOrientation="horizontal"
-    cdkDropListConnectedTo="even"
-    class="example-list"
-    (cdkDropListDropped)="drop($event)"
-    [cdkDropListEnterPredicate]="noReturnPredicate">
-    <div
-      class="example-box"
-      *ngFor="let piece of all"
-      [cdkDragData]="piece"
-      cdkDrag>
-        <app-piece [piece]="piece"></app-piece>
-    </div>
   </div>
 </div>
 
 <div class="example-container">
-  <h2>Even numbers</h2>
+  <h2>Personal rule</h2>
 
   <div
-    id="even"
+    id="rule"
     cdkDropList
-    [cdkDropListData]="even"
-    cdkDropListConnectedTo="all"
+    [cdkDropListData]=myList
+    [cdkDropListConnectedTo]=allLists
     cdkDropListOrientation="horizontal"
     class="example-list"
-    (cdkDropListDropped)="drop($event)"
-    [cdkDropListEnterPredicate]="evenPredicate">
+    (cdkDropListDropped)="movePiece($event)"
+    [cdkDropListEnterPredicate]="checkMovePiece" #myrule>
     <div
       class="example-box"
-      *ngFor="let piece of even"
+      *ngFor="let piece of myList"
       cdkDrag
+      [cdkDragDisabled]="isEmptyPiece(piece)"
       [cdkDragData]="piece">
       <app-piece [piece]="piece"></app-piece>
     </div>
   </div>
-</div>
+  </div>
+  <div
+    class="example-box"
+    cdkDrag
+    [cdkDragDisabled]=true
+    [cdkDragData]=emptyPiece>
+    <app-piece [piece]="emptyPiece"></app-piece>
+  </div>
+
+  <button type="button" (click)="add()">
+    <span class="material-icons">add</span>
+  </button>
+
+  <button type="button" (click)="testRemoteMove()">
+    <span class="material-icons">download</span>
+  </button>

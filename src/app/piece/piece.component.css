@@ -7,7 +7,7 @@
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
-  border: solid;
+  border: 1px solid #E6E0D8;
   cursor: move;
   background: white;
   font-size: 18;
@@ -15,27 +15,28 @@
 }
 
 .red {
-  background-color: Beige;
+  background-color: #E6D7C8;
   color: red;
 }
 
 .black {
-  background-color: Beige ;
+  background-color: #E6D7C8;
   color: black;
 }
 
 .yellow {
-  background-color: Beige ;
+  background-color: #E6D7C8;
   color: DarkOrange;
 
 }
 
 .blue {
-  background-color: Beige ;
+  background-color: #E6D7C8;
   color: blue;
 }
 
 .none {
   background-color: none;
   border: none;
+  cursor: default;
 }
