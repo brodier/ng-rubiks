@@ -3,6 +3,7 @@ import {NgForm} from '@angular/forms';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {CdkDropList, CdkDragDrop, CdkDrag, moveItemInArray, transferArrayItem, copyArrayItem} from '@angular/cdk/drag-drop';
 import { Piece } from '../_model/piece.model';
+import { Board, Move } from '../_model/board.model';
 import { BoardService } from '../board.service';
 
 @Component({
@@ -12,7 +13,7 @@ import { BoardService } from '../board.service';
 })
 export class BoardComponent implements OnInit {
 
-  constructor(bdSvc: BoardService) {
+  constructor(public bdSvc: BoardService) {
     this.lists = bdSvc.getBoard();
   }
 
@@ -33,7 +34,7 @@ export class BoardComponent implements OnInit {
   movePiece(event: CdkDragDrop<Piece[]>) {
     console.info("from: " + event.previousContainer.id + " at " + event.previousIndex);
     console.info("to: " + event.container.id + " at " + event.currentIndex);
-
+    var currentPiece = this.myList[event.previousIndex];
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -42,6 +43,17 @@ export class BoardComponent implements OnInit {
                         event.previousIndex,
                         event.currentIndex);
     }
+    var move = {from: "pl-0", fromIndex: 0, piece: this.emptyPiece, to: "pl-0", toIndex: 0};
+    if(event.previousContainer.id=='rule') {
+      console.info("player play : " + currentPiece.value + " " + currentPiece.color);
+      move.piece = currentPiece;
+    } else {
+      move.from = event.previousContainer.id;
+      move.fromIndex = event.previousIndex;
+    }
+    move.to = event.container.id;
+    move.toIndex = event.currentIndex;
+    this.bdSvc.sendMove(move);
     // todo organize line to avoid long line
   }
 
@@ -99,9 +111,11 @@ export class BoardComponent implements OnInit {
   }
 
   sortMyList() {
+    var currColor='none';
+    var currValue=0;
+    var count=0;
     this.myList = this.myList.sort(function(p1,p2) {
       const colors = ['red','blue','yellow','black'];
-
       if(p1.value < p2.value) {
         return -1;
       }
@@ -117,4 +131,28 @@ export class BoardComponent implements OnInit {
       return 0;
     });
   }
+
+  sortMyList2() {
+    var currColor='none';
+    var currValue=0;
+    var count=0;
+    this.myList = this.myList.sort(function(p1,p2) {
+      const colors = ['red','blue','yellow','black'];
+      if(colors.indexOf(p1.color) < colors.indexOf(p2.color)) {
+        return -1;
+      }
+      if(colors.indexOf(p1.color) > colors.indexOf(p2.color)) {
+        return 1;
+      }
+      if(p1.value < p2.value) {
+        return -1;
+      }
+      if(p1.value > p2.value) {
+        return 1;
+      }
+      return 0;
+    });
+  }
+
+
 }

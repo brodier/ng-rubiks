@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Piece } from './_model/piece.model';
+import { Move } from './_model/board.model';
 @Injectable({
   providedIn: 'root'
 })
@@ -21,6 +22,9 @@ export class BoardService {
     return lists;
   }
 
+  sendMove(move:Move) {
+
+  }
   // observe change on board as sequential step from a define step
   observeBoard(step:number) {
 

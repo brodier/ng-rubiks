@@ -1,3 +1,5 @@
+import { Piece } from './piece.model';
+
 export interface Board {
     table: Piece[];
     rule: Piece[];
@@ -5,5 +7,9 @@ export interface Board {
 }
 
 export interface Move {
-  to: number;
+  from?: string;
+  fromIndex?: number;
+  piece?: Piece;
+  to: string;
+  toIndex: number;
 }
