@@ -56,11 +56,20 @@
     [cdkDragData]=emptyPiece>
     <app-piece [piece]="emptyPiece"></app-piece>
   </div>
-
+  <input  #mfl type='text'>
+  <input  #mtl type='text'>
+  <input  #mfi type='number'>
+  <input  #mti type='number'>
   <button type="button" (click)="add()">
     <span class="material-icons">add</span>
   </button>
+  <button type="button" (click)="sortMyList()">
+    sort 123
+  </button>
+  <button type="button" (click)="sortMyList()">
+    sort 777
+  </button>
 
-  <button type="button" (click)="testRemoteMove()">
+  <button type="button" (click)="testRemoteMove(mfl.value, mtl.value, mfi.value, mti.value)">
     <span class="material-icons">download</span>
   </button>
