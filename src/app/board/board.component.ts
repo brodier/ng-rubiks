@@ -2,9 +2,11 @@ import { Component, OnInit, ViewChild, Input} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {CdkDropList, CdkDragDrop, CdkDrag, moveItemInArray, transferArrayItem, copyArrayItem} from '@angular/cdk/drag-drop';
-import { Piece } from '../_model/piece.model';
 import { Board, Move } from '../_model/board.model';
 import { BoardService } from '../board.service';
+
+const COLOR_LIST = ['red','blue','yellow','black'];
+
 
 @Component({
   selector: 'app-board',
@@ -22,16 +24,14 @@ export class BoardComponent implements OnInit {
 
   @ViewChild('myrule') myrule!: CdkDropList;
 
-  emptyPiece = {color: 'none', value: 0};
-  newPiece = {color: 'blue', value: 7};
-  lists = [{id: 'pl-0', pieces: [{color: 'none', value: 0}]}];
-
-  colors = ['red','blue','yellow','black'];
-
+  emptyPiece = -1;
+  newPiece = 32; // 7 blue
+  lists = [{id: 'pl-0', pieces: [-1]}];
   allLists = ['pl-0', 'pl-1','pl-2','pl-3','pl-4', 'pl-5','pl-6'];
-  myList: Piece[] = this.initMyList();
-  addList = [{color: 'none', value: 0}];
-  movePiece(event: CdkDragDrop<Piece[]>) {
+  myList: number[] = this.initMyList();
+  addList = [-1];
+
+  movePiece(event: CdkDragDrop<number[]>) {
     console.info("from: " + event.previousContainer.id + " at " + event.previousIndex);
     console.info("to: " + event.container.id + " at " + event.currentIndex);
     var currentPiece = this.myList[event.previousIndex];
@@ -43,9 +43,9 @@ export class BoardComponent implements OnInit {
                         event.previousIndex,
                         event.currentIndex);
     }
-    var move = {from: "pl-0", fromIndex: 0, piece: this.emptyPiece, to: "pl-0", toIndex: 0};
+    var move = {from: "pl-0", fromIndex: 0, piece: -1, to: "pl-0", toIndex: 0};
     if(event.previousContainer.id=='rule') {
-      console.info("player play : " + currentPiece.value + " " + currentPiece.color);
+      console.info("player play : " + currentPiece);
       move.piece = currentPiece;
     } else {
       move.from = event.previousContainer.id;
@@ -64,13 +64,9 @@ export class BoardComponent implements OnInit {
     }
     return rulePieces;
   }
-  /** Predicate function that only allows even numbers to be dropped into a list. */
-  evenPredicate(item: CdkDrag<Piece>) {
-    return item.data.value % 2 === 0;
-  }
 
   /** Predicate function that doesn't allow items to be dropped into a list. */
-  checkMovePiece(drag: CdkDrag<Piece>, dropList: CdkDropList) {
+  checkMovePiece(drag: CdkDrag<number>, dropList: CdkDropList) {
     return true;
   }
 
@@ -83,8 +79,8 @@ export class BoardComponent implements OnInit {
     return this.allLists;
   }
 
-  isEmptyPiece(p: Piece) {
-    return p.value==0;
+  isEmptyPiece(p: number) {
+    return p==-1;
   }
 
   add() {
@@ -94,7 +90,7 @@ export class BoardComponent implements OnInit {
   }
 
   randomPiece() {
-    return {color: this.colors[Math.floor(Math.random() * 4)], value: 1 + Math.floor(Math.random() * 13) };
+    return Math.floor(Math.random() * 106);
   }
 
   testRemoteMove(mfl:string, mtl:string, mfi:string, mti:string) {
@@ -111,46 +107,40 @@ export class BoardComponent implements OnInit {
   }
 
   sortMyList() {
-    var currColor='none';
-    var currValue=0;
-    var count=0;
-    this.myList = this.myList.sort(function(p1,p2) {
-      const colors = ['red','blue','yellow','black'];
-      if(p1.value < p2.value) {
-        return -1;
-      }
-      if(p1.value > p2.value) {
-        return 1;
-      }
-      if(colors.indexOf(p1.color) < colors.indexOf(p2.color)) {
-        return -1;
-      }
-      if(colors.indexOf(p1.color) > colors.indexOf(p2.color)) {
-        return 1;
-      }
-      return 0;
-    });
+    this.myList = this.myList.sort();
   }
 
   sortMyList2() {
-    var currColor='none';
+    var colorInd='none';
     var currValue=0;
     var count=0;
     this.myList = this.myList.sort(function(p1,p2) {
-      const colors = ['red','blue','yellow','black'];
-      if(colors.indexOf(p1.color) < colors.indexOf(p2.color)) {
-        return -1;
+      if(p1 > 103 && p2 < 104) {
+        return -1
       }
-      if(colors.indexOf(p1.color) > colors.indexOf(p2.color)) {
+      if(p1 < 104 && p2 > 103) {
         return 1;
       }
-      if(p1.value < p2.value) {
-        return -1;
+      if(p1 > 103 && p2 > 103) {
+        if(p1 < p2) {
+            return -1;
+        } else {
+          return 1;
+        }
       }
-      if(p1.value > p2.value) {
+      if(Math.floor(p1/26) == Math.floor(p2/26)) {
+        if (p1 % 13 == p2 % 13) {
+          return 0;
+        } else if(p1 % 13 < p2 % 13) {
+          return -1;
+        } else {
+          return 1;
+        }
+      } else if (Math.floor(p1/26) < Math.floor(p2/26)) {
+        return -1;
+      } else {
         return 1;
       }
-      return 0;
     });
   }
 

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Piece } from './_model/piece.model';
 import { Move } from './_model/board.model';
 @Injectable({
   providedIn: 'root'
@@ -15,7 +14,7 @@ export class BoardService {
     for(let j= 0; j < 7; j++) {
       var rowLine = [];
       for(let i = 0; i < 20; i++) {
-        rowLine.push({value: 0, color: 'none'});
+        rowLine.push(-1);
       }
       lists.push({id: 'pl-' + j, pieces: rowLine});
     }

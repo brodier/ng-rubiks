@@ -1,15 +1,13 @@
-import { Piece } from './piece.model';
-
 export interface Board {
-    table: Piece[];
-    rule: Piece[];
+    table: number[];
+    rule: number[];
     step: number;
 }
 
 export interface Move {
   from?: string;
   fromIndex?: number;
-  piece?: Piece;
+  piece?: number;
   to: string;
   toIndex: number;
 }

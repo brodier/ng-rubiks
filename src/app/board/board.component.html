@@ -21,7 +21,7 @@
       [cdkDragDisabled]="isEmptyPiece(piece)"
       [cdkDragData]="piece"
       cdkDrag>
-        <app-piece [piece]="piece"></app-piece>
+        <app-piece [pieceId]="piece"></app-piece>
     </div>
 
   </div>
@@ -45,7 +45,7 @@
       cdkDrag
       [cdkDragDisabled]="isEmptyPiece(piece)"
       [cdkDragData]="piece">
-      <app-piece [piece]="piece"></app-piece>
+      <app-piece [pieceId]="piece"></app-piece>
     </div>
   </div>
   </div>
